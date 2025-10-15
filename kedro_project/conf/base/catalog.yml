@@ -1,0 +1,26 @@
+# Kedro数据目录配置
+# 定义数据集的存储方式和格式
+
+# 原始数据集 - 使用内存数据集（适合演示）
+raw_data:
+  type: kedro.io.MemoryDataset
+
+# 训练和测试数据集 - 使用内存数据集
+X_train:
+  type: kedro.io.MemoryDataset
+
+X_test:
+  type: kedro.io.MemoryDataset
+
+y_train:
+  type: kedro.io.MemoryDataset
+
+y_test:
+  type: kedro.io.MemoryDataset
+
+# 训练好的模型 - 使用MLflow跟踪
+model:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: kedro.io.pickle.PickleDataset
+  flavor: "python_function"
