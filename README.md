@@ -68,6 +68,7 @@ airflow-on-k8s/
 2. **kubectl** 配置就绪
 3. **Helm 3** 安装
 4. **MinIO** (S3兼容存储)
+5. **Apache Airflow 2.0+** (支持新的DAG语法)
 
 ### 1. 部署基础服务
 
@@ -260,6 +261,7 @@ model = RandomForestClassifier(
 1. **DAG解析错误**
    - 确保DAG文件没有导入MLflow等不存在的包
    - 检查Python语法是否正确
+   - **TypeError: DAG.__init__() got an unexpected keyword argument 'schedule_interval'**: 使用 `schedule=None` 而不是 `schedule_interval=None` (Airflow 2.0+)
 
 2. **Pod启动失败**
    - 检查镜像是否正确

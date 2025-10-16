@@ -14,7 +14,7 @@ with DAG(
     dag_id="mlops_iris_dag",
     default_args=default_args,
     start_date=datetime(2025, 10, 16),
-    schedule_interval=None,
+    schedule=None,
     catchup=False,
     tags=["mlops", "kedro", "iris"],
 ) as dag:
