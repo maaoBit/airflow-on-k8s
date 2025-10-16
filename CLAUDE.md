@@ -103,3 +103,4 @@ kubectl logs <pod-name> -n airflow
 - **DAG解析兼容性**: 所有ML相关代码必须移到单独脚本中，因为Airflow DAG处理器容器不包含ML包
 - **Volume挂载**: DAG中的Pod任务需要正确挂载ConfigMap以访问脚本文件
 - **Airflow版本兼容性**: 使用 `schedule=None` 而不是 `schedule_interval=None` (Airflow 2.0+)
+- **Kubernetes对象格式**: Volume和VolumeMount必须使用 `V1Volume()` 和 `V1VolumeMount()` 对象，不能使用字典格式

@@ -262,6 +262,7 @@ model = RandomForestClassifier(
    - 确保DAG文件没有导入MLflow等不存在的包
    - 检查Python语法是否正确
    - **TypeError: DAG.__init__() got an unexpected keyword argument 'schedule_interval'**: 使用 `schedule=None` 而不是 `schedule_interval=None` (Airflow 2.0+)
+   - **AirflowException: Expected V1VolumeMount, got dict**: 使用正确的Kubernetes对象格式 `V1VolumeMount()` 和 `V1Volume()` 而不是字典格式
 
 2. **Pod启动失败**
    - 检查镜像是否正确

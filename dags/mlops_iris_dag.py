@@ -1,5 +1,6 @@
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
+from kubernetes.client import V1Volume, V1VolumeMount
 from datetime import datetime
 
 import os
@@ -40,30 +41,18 @@ with DAG(
             "AWS_SECRET_ACCESS_KEY": "{{ var.value.minio_secret_key }}",
         },
         volume_mounts=[
-            {
-                "name": "dags-volume",
-                "mount_path": "/opt/airflow/dags",
-                "read_only": True,
-            },
-            {
-                "name": "kedro-project-volume",
-                "mount_path": "/project",
-                "read_only": True,
-            }
+            V1VolumeMount(name="dags-volume", mount_path="/opt/airflow/dags", read_only=True),
+            V1VolumeMount(name="kedro-project-volume", mount_path="/project", read_only=True),
         ],
         volumes=[
-            {
-                "name": "dags-volume",
-                "config_map": {
-                    "name": "airflow-dags"
-                }
-            },
-            {
-                "name": "kedro-project-volume",
-                "config_map": {
-                    "name": "kedro-project"
-                }
-            }
+            V1Volume(
+                name="dags-volume",
+                config_map={"name": "airflow-dags"}
+            ),
+            V1Volume(
+                name="kedro-project-volume",
+                config_map={"name": "kedro-project"}
+            ),
         ],
     )
 
@@ -86,19 +75,13 @@ with DAG(
             "AWS_SECRET_ACCESS_KEY": "{{ var.value.minio_secret_key }}",
         },
         volume_mounts=[
-            {
-                "name": "dags-volume",
-                "mount_path": "/opt/airflow/dags",
-                "read_only": True,
-            }
+            V1VolumeMount(name="dags-volume", mount_path="/opt/airflow/dags", read_only=True),
         ],
         volumes=[
-            {
-                "name": "dags-volume",
-                "config_map": {
-                    "name": "airflow-dags"
-                }
-            }
+            V1Volume(
+                name="dags-volume",
+                config_map={"name": "airflow-dags"}
+            ),
         ],
     )
 
