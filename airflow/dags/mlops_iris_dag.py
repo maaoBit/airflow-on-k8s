@@ -18,7 +18,7 @@ with DAG(
 
     train_iris = KubernetesPodOperator(
         namespace="airflow",
-        image="maao/mlops-train:latest",
+        image="registry.paas/maao/mlops-train:latest",
         name="train-iris",
         task_id="train_iris_task",
         env_vars={
