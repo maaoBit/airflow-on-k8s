@@ -1,7 +1,8 @@
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from datetime import datetime
+
 import os
 import mlflow
 
@@ -14,7 +15,7 @@ default_args = {
 with DAG(
     dag_id="mlops_iris_dag",
     default_args=default_args,
-    start_date=days_ago(1),
+    start_date=datetime(2025, 10, 16),
     schedule_interval=None,
     catchup=False,
     tags=["mlops", "kedro", "iris"],
