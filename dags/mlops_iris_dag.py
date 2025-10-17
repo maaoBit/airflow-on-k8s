@@ -55,18 +55,6 @@ with DAG(
         cmds=["bash", "-c"],
         arguments=[
             """
-            # 等待git-sync完成代码同步
-            echo "⏳ 等待代码同步..."
-            while [ ! -f "/repo/pyproject.toml" ]; do
-                echo "等待项目文件同步..."; sleep 2
-            done
-
-            # 等待Kedro项目文件同步完成
-            while [ ! -f "/repo/kedro_project/conf/base/catalog.yml" ]; do
-                echo "等待配置文件同步..."; sleep 2
-            done
-
-            echo "✅ 代码同步完成!"
             echo "📁 项目目录内容:"
             ls -la /repo/
             echo "📁 Kedro项目内容:"
@@ -110,13 +98,6 @@ with DAG(
         cmds=["bash", "-c"],
         arguments=[
             """
-            # 等待git-sync完成脚本同步
-            echo "⏳ 等待脚本同步..."
-            while [ ! -f "/repo/scripts/register_model.py" ]; do
-                echo "等待中..."; sleep 2
-            done
-            echo "✅ 脚本同步完成!"
-
             # 安装依赖并运行模型注册
             pip install mlflow boto3 && \
             python /repo/scripts/register_model.py

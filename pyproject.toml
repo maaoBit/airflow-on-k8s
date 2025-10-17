@@ -33,6 +33,6 @@ dev = [
 package_name = "kedro_project"
 project_name = "Kedro Project"
 kedro_init_version = "0.19.5"
-
-[tool.kedro.pipeline]
-# 这里可以配置默认的流水线设置
+source_dir = "src"
+tools = ["kedro-mlflow"]
+example_pipeline = "iris_classification"
