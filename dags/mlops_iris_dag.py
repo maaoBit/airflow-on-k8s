@@ -29,8 +29,7 @@ def create_git_sync_container():
             export http_proxy=http://192.168.2.1:4780 && \
             export https_proxy=http://192.168.2.1:4780 && \
             git clone --depth 1 --branch main https://github.com/maaoBit/airflow-on-k8s.git . && \
-            echo "✅ 代码同步完成!" && \
-            sleep infinity  # 保持容器运行
+            echo "✅ 代码同步完成!"
             """
         ],
         volume_mounts=[
