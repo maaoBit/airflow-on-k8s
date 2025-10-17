@@ -57,15 +57,28 @@ with DAG(
             """
             # 等待git-sync完成代码同步
             echo "⏳ 等待代码同步..."
-            while [ ! -f "/repo/kedro_project/conf/base/catalog.yml" ]; do
-                echo "等待中..."; sleep 2
+            while [ ! -f "/repo/pyproject.toml" ]; do
+                echo "等待项目文件同步..."; sleep 2
             done
+
+            # 等待Kedro项目文件同步完成
+            while [ ! -f "/repo/kedro_project/conf/base/catalog.yml" ]; do
+                echo "等待配置文件同步..."; sleep 2
+            done
+
             echo "✅ 代码同步完成!"
+            echo "📁 项目目录内容:"
+            ls -la /repo/
+            echo "📁 Kedro项目内容:"
+            ls -la /repo/kedro_project/
 
             # 安装依赖并运行训练
+            echo "🔧 安装Python依赖..."
             pip install kedro mlflow kedro-mlflow boto3 scikit-learn pandas numpy && \
             cd /repo && \
             echo "🚀 开始Kedro训练流水线..." && \
+            echo "📋 当前目录: $(pwd)" && \
+            echo "📋 项目文件: $(ls -la pyproject.toml)" && \
             kedro run --pipeline=training
             """
         ],

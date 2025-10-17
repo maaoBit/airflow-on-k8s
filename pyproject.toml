@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kedro-project"
+version = "0.1.0"
+description = "MLOps Kedro project for Iris classification"
+authors = [
+    {name = "MLOps Team", email = "mlops@example.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "kedro>=0.19.0",
+    "kedro-mlflow>=0.12.1",
+    "mlflow>=2.13.0",
+    "scikit-learn",
+    "pandas",
+    "numpy"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "jupyter>=1.0.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0"
+]
+
+[tool.kedro]
+package_name = "kedro_project"
+project_name = "Kedro Project"
+kedro_init_version = "0.19.5"
+
+[tool.kedro.pipeline]
+# 这里可以配置默认的流水线设置
