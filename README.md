@@ -70,6 +70,44 @@ airflow-on-k8s/
 4. **MinIO** (S3兼容存储)
 5. **Apache Airflow 2.0+** (支持新的DAG语法)
 
+### 🔄 Git-Sync自动化方案
+
+本项目采用**最简单的git-sync sidecar方案**，自动从Git仓库同步最新代码：
+
+#### 🎯 方案特点
+- ✅ **自动同步**: Pod启动时自动拉取最新代码
+- ✅ **零手动操作**: 无需手动创建ConfigMap
+- ✅ **简单配置**: 只需要一个简单的sidecar容器
+- ✅ **适合演示**: 完美适合MLOps演示和开发
+
+#### 🔧 工作原理
+```mermaid
+graph LR
+    A[Pod启动] --> B[git-sync sidecar拉取代码]
+    B --> C[主容器等待同步完成]
+    C --> D[执行Kedro训练流水线]
+```
+
+#### 📋 技术实现
+1. **git-sync sidecar**: 使用 `alpine/git` 镜像拉取代码
+2. **emptyDir volume**: 主容器和sidecar共享代码目录
+3. **等待机制**: 主容器等待关键文件出现后开始执行
+4. **环境变量**: 支持自定义Git仓库和分支
+
+#### 📁 目录结构
+```
+/repo/ (共享volume)
+├── kedro_project/          # Kedro项目代码
+├── scripts/               # 辅助脚本
+└── dags/                  # DAG文件
+```
+
+#### ⚙️ 配置说明
+DAG文件位于 [`dags/mlops_iris_dag.py`](dags/mlops_iris_dag.py)，关键配置：
+- **Git仓库**: 可通过 `GIT_REPO` 环境变量设置
+- **分支**: 可通过 `GIT_BRANCH` 环境变量设置
+- **等待机制**: 检查关键文件存在后开始执行
+
 ### 1. 部署基础服务
 
 #### 部署MinIO (对象存储)
@@ -169,28 +207,34 @@ minio_access_key = admin
 minio_secret_key = password1234
 ```
 
-### 3. 创建ConfigMaps
+### 3. 运行DAG
 
-```bash
-# 创建DAG ConfigMap
-kubectl create configmap airflow-dags \
-  --from-file=dags/ \
-  --from-file=scripts/ \
-  --namespace=airflow
-
-# 创建Kedro项目ConfigMap
-kubectl create configmap kedro-project \
-  --from-file=kedro_project/ \
-  --namespace=airflow
-```
-
-### 4. 运行DAG
+使用git-sync方案，**无需手动创建ConfigMap**，代码会自动同步：
 
 1. 访问Airflow UI: `http://<airflow-service>/`
-2. 启用 `mlops_iris_dag`
+2. 启用 `mlops_iris_dag` (带有git-sync标签)
 3. 手动触发DAG执行
 4. 监控任务执行状态
 5. 在MLflow UI查看结果: `http://<mlflow-service>:5000`
+
+#### 🔄 Git-Sync工作流程
+1. Pod启动时，git-sync sidecar自动拉取最新代码
+2. 主容器等待代码同步完成
+3. 安装Python依赖
+4. 执行Kedro训练流水线
+5. 记录实验到MLflow
+6. 注册最佳模型
+
+#### 📋 监控Git-Sync状态
+```bash
+# 查看Pod日志
+kubectl logs <pod-name> -c git-sync -n airflow  # git-sync日志
+kubectl logs <pod-name> -c main -n airflow      # 主容器日志
+
+# 检查Pod状态
+kubectl get pods -n airflow
+kubectl describe pod <pod-name> -n airflow
+```
 
 ## 🔍 监控和调试
 
