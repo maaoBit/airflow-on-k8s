@@ -33,6 +33,6 @@ dev = [
 package_name = "kedro_project"
 project_name = "Kedro Project"
 kedro_init_version = "0.19.5"
-source_dir = "src"
+source_dir = "kedro_project/src"
 tools = ["kedro-mlflow"]
 example_pipeline = "iris_classification"
