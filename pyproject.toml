@@ -13,12 +13,12 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "kedro>=0.19.0",
-    "kedro-mlflow>=0.12.1",
-    "mlflow>=2.13.0",
-    "scikit-learn",
-    "pandas",
-    "numpy"
+    "kedro>=1.0.0",
+    "kedro-mlflow>=1.0.2",
+    "mlflow>=3.5.0",
+    "scikit-learn>=1.7.2",
+    "pandas>=2.3.3",
+    "numpy>=2.3.4"
 ]
 
 [project.optional-dependencies]
@@ -32,7 +32,7 @@ dev = [
 [tool.kedro]
 package_name = "kedro_project"
 project_name = "Kedro Project"
-kedro_init_version = "0.19.5"
+kedro_init_version = "1.0.0"
 source_dir = "kedro_project/src"
 tools = ["kedro-mlflow"]
 example_pipeline = "iris_classification"

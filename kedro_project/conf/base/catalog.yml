@@ -3,24 +3,24 @@
 
 # 原始数据集 - 使用内存数据集（适合演示）
 raw_data:
-  type: MemoryDataset
+  type: kedro.io.MemoryDataset
 
 # 训练和测试数据集 - 使用内存数据集
 X_train:
-  type: MemoryDataset
+  type: kedro.io.MemoryDataset
 
 X_test:
-  type: MemoryDataset
+  type: kedro.io.MemoryDataset
 
 y_train:
-  type: MemoryDataset
+  type: kedro.io.MemoryDataset
 
 y_test:
-  type: MemoryDataset
+  type: kedro.io.MemoryDataset
 
 # 训练好的模型 - 使用MLflow跟踪
 model:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
-    type: pickle.PickleDataset
+    type: kedro.io.pickle.PickleDataset
   flavor: "python_function"

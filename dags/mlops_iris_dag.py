@@ -63,7 +63,7 @@ with DAG(
             # 安装依赖并运行训练
             echo "🔧 安装Python依赖..."
             pip install kedro mlflow kedro-mlflow boto3 scikit-learn pandas numpy && \
-            cd /repo && \
+            cd /repo/kedro_project && \
             echo "🚀 开始Kedro训练流水线..." && \
             echo "📋 当前目录: $(pwd)" && \
             echo "📋 项目文件: $(ls -la pyproject.toml)" && \
