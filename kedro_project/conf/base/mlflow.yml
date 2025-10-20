@@ -1,5 +1,5 @@
-mlflow:
-  tracking_uri: ${MLFLOW_TRACKING_URI:-http://mlflow.mlflow.svc.cluster.local:5000}
+server:
+  mlflow_tracking_uri: "http://mlflow.mlflow.svc.cluster.local:5000"
+tracking:
   experiment:
-    name: iris-classification
-  ui_port: 5000
+    name: "iris-classification"

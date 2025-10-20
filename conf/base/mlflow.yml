@@ -1,4 +1,3 @@
-mlflow:
-  tracking_uri: "http://mlflow.mlflow.svc.cluster.local:5000"
-  experiment:
-    name: iris-classification
+server:
+  mlflow_tracking_uri: "http://mlflow.mlflow.svc.cluster.local:5000"
+  mlflow_experiment_name: "iris-classification"
