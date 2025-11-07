@@ -45,3 +45,17 @@
 example_iris_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/iris.csv
+
+# MLflow模型配置 - 自动注册到MLflow Model Registry
+iris_model:
+  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+  flavor: "mlflow.sklearn"
+  artifact_path: "iris_model"
+  save_args:
+    registered_model_name: "iris-classifier"
+    serialization_format: "pickle"
+    conda_env:
+      dependencies:
+        - python=3.11
+        - scikit-learn
+        - pandas

@@ -13,7 +13,9 @@ dependencies = [
     "notebook",
     "kedro[jupyter]~=1.0.0",
     "kedro-datasets[pandas-csvdataset]>=3.0",
-    "kedro-airflow~=0.5"
+    "kedro-airflow~=0.5",
+    "kedro-mlflow~=1.0.0",
+    "boto3=1.40.66"
 ]
 
 [project.scripts]
@@ -81,3 +83,6 @@ select = [
     "T201", # Print Statement
 ]
 ignore = ["E501"]  # Ruff format takes care of line-too-long
+
+[tool.kedro_telemetry]
+project_id = "cb32fcfb995746bc86e84074a5d738c2"

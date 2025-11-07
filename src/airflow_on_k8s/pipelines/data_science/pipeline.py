@@ -15,12 +15,12 @@ def create_pipeline(**kwargs):
             Node(
                 train_model,
                 ["example_train_x", "example_train_y", "parameters"],
-                "example_model",
+                "iris_model",  # 使用MLflow配置的模型数据集
                 name="train",
             ),
             Node(
                 predict,
-                dict(model="example_model", test_x="example_test_x"),
+                dict(model="iris_model", test_x="example_test_x"),
                 "example_predictions",
                 name="predict",
             ),
